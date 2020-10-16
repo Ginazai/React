@@ -1,5 +1,20 @@
-.App {
+/* .App {
   text-align: center;
+}
+
+li{
+  list-style-type: none;
+}
+
+.navbar{
+  height: 50px;
+}
+
+.navbar-brand{
+  text-decoration: none !important;
+  margin-top: auto;
+  margin-bottom: auto;
+  vertical-align: bottom;
 }
 
 .App-logo {
@@ -35,4 +50,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
