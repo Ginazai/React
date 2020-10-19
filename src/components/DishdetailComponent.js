@@ -1,15 +1,10 @@
-import React, {  Component } from 'react';
+import React from 'react';
 import {Card, CardImg, CardText, CardBody, CardTitle, ListGroup, ListGroupItem}
 from 'reactstrap';
 
-class Dish extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-    };
-  }
+const Dish = ({dish}) => {
 
-  fromISODate(date){
+  function fromISODate(date){
     var reg = /\d+/g;
     var time  = [];
     var format = {year: 'numeric', month: 'long', day: 'numeric'};
@@ -22,12 +17,13 @@ class Dish extends Component {
     return d;
   }
 
-  renderComments(comment){
+  const RenderComments = ({comment}) => {
     if(comment != null){
         return(
-          <div key={comment.id} className="m-1">
+          <div className="m-1">
             <ListGroupItem>{comment.comment}</ListGroupItem>
-            <ListGroupItem>--{comment.author}, {this.fromISODate(comment.date)}</ListGroupItem>
+            <ListGroupItem>--{comment.author}, {fromISODate(comment.date)}
+            </ListGroupItem>
           </div>
         );
     } else {
@@ -35,12 +31,15 @@ class Dish extends Component {
     }
   }
 
-  renderDish(dish){
+  const RenderDish = ({dish}) => {
     if(dish != null){
       const comment = dish.comments.map((comment) => {
-        return(this.renderComments(comment));
+        return(
+          <RenderComments key={comment.id} comment={comment} />
+        );
       });
       return(
+        <div key={dish.id} className="container">
           <div className="row">
             <Card className="col-lg-5 col-md-5 col-sm-12 m-1">
                 <CardImg src={dish.image} />
@@ -54,14 +53,15 @@ class Dish extends Component {
                 {comment}
             </ListGroup>
           </div>
+          </div>
       );
     } else{return(<div></div>);}
   }
 
-  render(){
-    const selected = this.props.selectedDish;
-    return(this.renderDish(selected));
-  }
+  return(
+    <RenderDish dish={dish}/>
+  );
 
 }
+
 export default Dish;
