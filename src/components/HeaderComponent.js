@@ -33,20 +33,25 @@ class Header extends Component{
                   </NavLink>
               </NavItem>
               <NavItem>
+                <NavLink className="nav-link" to="/menu">
+                  <span className="fa fa-list fa-md"> Menu</span>
+                </NavLink>
+              </NavItem>
+              <NavItem>
                 <NavLink className="nav-link" to="/aboutus">
                   <span className="fa fa-info fa-md"> About Us</span>
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink className="nav-link" to="/menu">
-                  <span className="fa fa-list fa-md"> Menu</span>
+                <NavLink className="nav-link" to="/contactus">
+                  <span className="fa fa-list fa-md"> Contact Us</span>
                 </NavLink>
               </NavItem>
               </Nav>
             </Collapse>
             </div>
           </Navbar>
-          <Jumbotron>
+          <Jumbotron className="p-4">
             <div className="container-fluid">
               <div className="row row-header">
                 <div className="col-12 col-sm-6">
