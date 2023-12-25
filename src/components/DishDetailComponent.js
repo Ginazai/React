@@ -25,7 +25,7 @@ class DishDetail extends Component {
 				var date = new Date(h.date).toLocaleDateString("en-US", dateFormat);
 
 				return(
-				<List type="unstyled">
+				<List key={ h.id } type="unstyled">
 					<li>{h.comment}</li>
 					<li>-- {h.author}, {date}</li>
 				</List>
@@ -48,13 +48,15 @@ class DishDetail extends Component {
 
 		if (dish != null) {
 			return(
-				 <div className="row">
-					 <div className="col-12 col-sm-5 m-1">
-					 	<Card>
-					 		{ this.renderDish(dish) }
-					 	</Card>	
+				 <div className="container">
+					 <div className="row">
+					 	<div className="col-12 col-sm-5 m-1">
+						 	<Card>
+						 		{ this.renderDish(dish) }
+						 	</Card>	
+						 </div>
+						 { this.renderComments(dish.comments) }
 					 </div>
-					 { this.renderComments(dish.comments) }
 			    </div>
 		    );
 		} else {
