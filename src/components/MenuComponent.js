@@ -23,7 +23,7 @@ class Menu extends Component {
 
       return (
         <div className="container">
-          <div className="row">
+          <div className="row justify-content-center">
             {menu}
           </div>
         </div>

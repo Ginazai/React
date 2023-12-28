@@ -49,7 +49,7 @@ class DishDetail extends Component {
 		if (dish != null) {
 			return(
 				 <div className="container">
-					 <div className="row">
+					 <div className="row justify-content-center">
 					 	<div className="col-12 col-sm-5 m-1">
 						 	<Card>
 						 		{ this.renderDish(dish) }
