@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-let Footer = (props) => {
+const Footer = (props) => {
 	return(
 	    <div className="footer">
 	        <div className="container">
