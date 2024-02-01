@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Card, List, CardImg, CardImgOverlay, CardText, CardTitle, CardBody, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, List, CardImg, CardImgOverlay, CardText, CardTitle, CardBody, Breadcrumb, BreadcrumbItem, Button, 
+Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Control, Errors, LocalForm } from 'react-redux-form';
 
 const RenderDish = ({ dish }) => {
 	return(
@@ -19,17 +21,15 @@ const RenderComments = ({ comments }) => {
 		const e = comments.map((comment) => {
 			var dateFormat = { month: 'short', day: 'numeric', year: 'numeric' };
 			var date = new Date(comment.date).toLocaleDateString("en-US", dateFormat);
-			console.log(comment);
-
 			return(
 			<List key={ comment.id } type="unstyled">
 				<li>{comment.comment}</li>
-				<li>-- {comment.author}, {date}</li>
+				<li className="p-2">-- {comment.author}, {date}</li>
 			</List>
 			);
 		});
 		return(
-			<div className="col-12 col-sm-5 m-1">
+			<div>
 				<h4>Comments</h4>
 				{e}
 			</div>
@@ -38,6 +38,129 @@ const RenderComments = ({ comments }) => {
 		return(<div></div>);
 	}
 
+}
+
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+class CommentForm extends Component {
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+        cname: '',
+        touched: {
+            cname: false
+        }
+    };
+
+    this.toggleModal = this.toggleModal.bind(this);
+		this.handleComment = this.handleComment.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleBlur = this.handleBlur.bind(this);
+
+	}
+
+	toggleModal() {
+		this.setState({isModalOpen: !this.state.isModalOpen});
+	}
+
+	handleInputChange(event) {
+      const target = event.target;
+      const name = target.name;
+
+      this.setState({
+          [name]: value
+      });
+
+    }
+
+	handleComment(values) {
+	  alert(JSON.stringify(values));
+	}
+
+	handleBlur = (field) => (evt) => {
+		
+			this.setState({
+          touched: {...this.state.touched, [field]: true}
+    	});
+    	console.log(this.state.touched.cname);
+  }
+
+	validate(cname) {
+		const errors = {
+        cname: '',
+    };
+    console.log(this.state.touched.cname);
+
+	  if (this.state.touched.cname && cname.length < 3)
+	  	errors.cname = 'Name should be >= 3 characters';
+	  else if (this.state.touched.cname && cname.length > 15)
+	  	errors.cname = 'Name should be <= 15 characters';
+
+    return errors;
+
+  }
+
+	render() {
+		const errors = this.validate(this.state.name);
+
+		return(
+			<div>
+				<Button outline onClick={this.toggleModal}>
+					<span className="fa fa-edit fa-lg"></span>
+					Submit Comment
+				</Button>
+
+        	<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+	          <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
+	          <ModalBody>
+	          	<LocalForm onSubmit={(values) => this.handleComment(values)}>
+
+	          				<Row className="form-group">
+		          				<Col md={12}>
+		                      <Label htmlFor="rating">Your Name</Label>
+		                      <Input type="select" id="rating" name="rating"
+		                      innerRef={(input) => this.rating = input}>
+		                        	<option value="1">1</option>
+		                        	<option value="2">2</option>
+		                        	<option value="3">3</option>
+		                        	<option value="4">4</option>
+		                        	<option value="5">5</option>
+	                        </Input>
+	                    </Col>
+	                  </Row>
+
+	                  <Row className="form-group">
+		                  <Col md={12}>
+		                      <Label htmlFor="cname">Your Name</Label>
+
+		                      <Control.text model=".cname" id="cname" name="cname"
+		                      		placeholder="Name" className="form-control" 
+		                          validators={{required, minLength: minLength(3), maxLength: maxLength(15)}} />
+
+		                       <Errors
+	                            className="text-danger"
+	                            model=".cname"
+	                            show="touched"
+	                            messages={{
+	                                required: 'Required: ',
+	                                minLength: 'Must be greater than 2 characters',
+	                                maxLength: 'Must be 15 characters or less'}} 
+	                          />
+
+	                    </Col>
+
+	                  </Row>
+	                  <Button type="submit"  color="primary">Submit</Button>
+	              </LocalForm>
+	          </ModalBody>
+	      </Modal>
+
+			</div>
+			);
+	}
 }
 
 const DishDetail = (props) => {
@@ -58,13 +181,16 @@ const DishDetail = (props) => {
 			 			<hr />
 			 		</div>
 			 	</div>
-				 <div className="row justify-content-center">
-				 	<div className="col-12 col-sm-5 m-1">
+				 <div className="row">
+				 	<div className="col-6 col-sm-5">
 					 	<Card>
 					 		<RenderDish dish={dish}  />
 					 	</Card>	
 					 </div>
-					 <RenderComments comments={comments} />
+					 <div className="col-6 col-sm-5">
+					 	<RenderComments comments={comments} />
+					 	<CommentForm />
+					 </div>
 				 </div>
 		    </div>
 	    );

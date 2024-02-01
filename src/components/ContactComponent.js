@@ -28,6 +28,7 @@ class Contact extends Component {
                 email: false
             }
         };
+        
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
@@ -130,9 +131,11 @@ class Contact extends Component {
                    </div>
                     <div className="col-12 col-md-9">
                         <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
+
                                     <Control.text model=".firstname" id="firstname" name="firstname"
                                         placeholder="First Name"
                                         className="form-control"
@@ -140,6 +143,7 @@ class Contact extends Component {
                                             required, minLength: minLength(3), maxLength: maxLength(15)
                                         }}
                                          />
+
                                     <Errors
                                         className="text-danger"
                                         model=".firstname"
@@ -150,8 +154,10 @@ class Contact extends Component {
                                             maxLength: 'Must be 15 characters or less'
                                         }}
                                      />
+
                                 </Col>
                             </Row>
+
                             <Row className="form-group">
                                 <Label htmlFor="lastname" md={2}>Last Name</Label>
                                 <Col md={10}>
