@@ -40,6 +40,7 @@ const RenderComments = ({ comments }) => {
 
 }
 
+//CommentForm Component
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -50,6 +51,7 @@ class CommentForm extends Component {
 
 		this.state = {
         cname: '',
+        comment: '',
         touched: {
             cname: false
         }
@@ -121,14 +123,15 @@ class CommentForm extends Component {
 	          				<Row className="form-group">
 		          				<Col md={12}>
 		                      <Label htmlFor="rating">Your Name</Label>
-		                      <Input type="select" id="rating" name="rating"
-		                      innerRef={(input) => this.rating = input}>
+		                      <Control.select model=".rating" type="select" id="rating" name="rating"
+		                      className="form-control"
+		                      >
 		                        	<option value="1">1</option>
 		                        	<option value="2">2</option>
 		                        	<option value="3">3</option>
 		                        	<option value="4">4</option>
 		                        	<option value="5">5</option>
-	                        </Input>
+	                        </Control.select>
 	                    </Col>
 	                  </Row>
 
@@ -149,6 +152,15 @@ class CommentForm extends Component {
 	                                minLength: 'Must be greater than 2 characters',
 	                                maxLength: 'Must be 15 characters or less'}} 
 	                          />
+
+	                          <Row className="form-group">
+                              <Label htmlFor="comment" md={2}>Comment</Label>
+                              <Col md={12}>
+                                  <Control.textarea model=".comment" id="comment" name="comment"
+                                      rows="12"
+                                      className="form-control" />
+                              </Col>
+                            </Row>
 
 	                    </Col>
 
